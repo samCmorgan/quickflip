@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuickFlip Media — About</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarina&family=Cormorant+Garamond:ital,wght@1,300&family=Nunito:wght@300;400;500;600;700;800&family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #222e50;
+    --paper: #fffff0;
+    --paper-mid: #f5f5e0;
+    --paper-dark: #e8e8cc;
+    --mid: #4a5568;
+    --light: #8896a8;
+    --gold: #eeba2b;
+    --coral: #ff6f59;
+    --sky: #57c2ef;
+    --font-display: 'Sarina', Georgia, serif;
+    --font-body: 'Nunito', sans-serif;
+    --font-condensed: 'Nunito Sans', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    background: var(--ink); display: flex; align-items: center;
+    justify-content: space-between; padding: 0 56px; height: 64px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-mark {
+    width: 38px; height: 38px; background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Sarina', serif; font-size: 16px; color: var(--ink);
+  }
+  .nav-logo-text { font-family: 'Sarina', serif; font-size: 20px; color: var(--paper); }
+  .nav-logo-text span { color: var(--gold); }
+  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+  .nav-links a {
+    font-family: var(--font-condensed); font-weight: 600; font-size: 13px;
+    letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none;
+    color: rgba(245,240,232,0.5); transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--paper); }
+  .nav-cta {
+    color: var(--ink) !important; background: var(--paper);
+    padding: 9px 22px; transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--gold) !important; }
+
+  /* PAGE HERO */
+  .page-hero {
+    background: var(--ink);
+    padding: 80px 56px 72px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute; top: 0; right: 0; bottom: 0;
+    width: 40%;
+    background: linear-gradient(to left, rgba(87,194,239,0.05), transparent);
+    pointer-events: none;
+  }
+  .page-hero-inner { max-width: 1280px; margin: 0 auto; }
+  .page-eyebrow {
+    font-family: var(--font-condensed); font-weight: 700; font-size: 11px;
+    letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
+  }
+  .page-eyebrow::before { content: ''; width: 26px; height: 1px; background: var(--gold); display: inline-block; }
+  .page-title {
+    font-family: 'Sarina', serif;
+    font-size: clamp(40px, 5vw, 72px);
+    color: var(--paper);
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .page-subtitle {
+    font-size: 17px; color: rgba(255,255,255,0.45); line-height: 1.75;
+    max-width: 560px;
+  }
+
+  /* SECTION UTILS */
+  .section-wrap { padding: 80px 56px; max-width: 1280px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-condensed); font-weight: 700; font-size: 11px;
+    letter-spacing: 0.28em; text-transform: uppercase; color: var(--coral);
+    margin-bottom: 12px; display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::before { content: ''; width: 26px; height: 1px; background: var(--coral); display: inline-block; }
+  .section-title { font-family: var(--font-body); font-size: clamp(30px, 3vw, 46px); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+
+  /* FOUNDERS STORY */
+  .founders-story { border-bottom: 1px solid var(--paper-dark); }
+  .founders-story .section-wrap {
+    display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0; align-items: start;
+  }
+  .story-left { padding-right: 64px; }
+  .story-divider { background: var(--paper-dark); }
+  .story-right { padding-left: 64px; }
+  .founder-profile {
+    display: flex; gap: 20px; align-items: flex-start;
+    padding: 24px; background: var(--paper-mid);
+    margin-bottom: 28px; transition: background 0.2s;
+  }
+  .founder-profile:hover { background: var(--paper-dark); }
+  .founder-photo {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: var(--paper-dark); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px; overflow: hidden;
+  }
+  .founder-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .founder-details {}
+  .founder-name {
+    font-family: var(--font-condensed); font-weight: 800; font-size: 16px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); margin-bottom: 3px;
+  }
+  .founder-title {
+    font-family: var(--font-condensed); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--coral); margin-bottom: 10px;
+  }
+  .founder-bio { font-size: 14px; color: var(--mid); line-height: 1.65; }
+  .story-body { font-size: 15px; color: var(--mid); line-height: 1.85; }
+  .story-body p { margin-bottom: 18px; }
+  .story-pullquote {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 22px; font-style: italic; font-weight: 300;
+    line-height: 1.5; color: var(--ink);
+    padding: 24px 0 24px 24px;
+    border-left: 3px solid var(--coral);
+    margin: 28px 0;
+  }
+
+  /* TEAM GRID */
+  .team-section { background: var(--paper-mid); border-top: 1px solid var(--paper-dark); border-bottom: 1px solid var(--paper-dark); }
+  .team-header { margin-bottom: 48px; }
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--paper-dark);
+  }
+  .team-card {
+    background: var(--paper-mid);
+    padding: 36px 28px;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .team-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--coral); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .team-card:hover { background: var(--paper); }
+  .team-card:hover::before { transform: scaleX(1); }
+  .team-photo {
+    width: 88px; height: 88px; border-radius: 50%;
+    background: var(--paper-dark); margin-bottom: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px; overflow: hidden;
+  }
+  .team-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .team-name {
+    font-family: var(--font-condensed); font-weight: 800; font-size: 15px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); margin-bottom: 4px;
+  }
+  .team-role {
+    font-family: var(--font-condensed); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--coral); margin-bottom: 14px;
+  }
+  .team-bio { font-size: 13px; color: var(--mid); line-height: 1.65; }
+
+  /* MISSION */
+  .mission { background: var(--ink); }
+  .mission .section-label { color: var(--gold); }
+  .mission .section-label::before { background: var(--gold); }
+  .mission .section-wrap {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .mission-title { font-family: var(--font-body); font-size: clamp(30px, 3vw, 46px); font-weight: 800; line-height: 1.1; color: var(--paper); letter-spacing: -0.02em; margin-top: 12px; }
+  .mission-body { font-size: 15px; color: rgba(255,255,255,0.45); line-height: 1.85; }
+  .mission-body p { margin-bottom: 16px; }
+  .mission-values { display: flex; flex-direction: column; gap: 1px; background: rgba(255,255,255,0.06); }
+  .mission-value {
+    background: var(--ink); padding: 22px 28px;
+    display: flex; gap: 16px; align-items: flex-start;
+    transition: background 0.2s;
+  }
+  .mission-value:hover { background: rgba(255,255,255,0.03); }
+  .mv-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .mv-name { font-family: var(--font-condensed); font-weight: 700; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--paper); margin-bottom: 5px; }
+  .mv-body { font-size: 13px; color: rgba(255,255,255,0.38); line-height: 1.65; }
+
+  /* CTA */
+  .about-cta { border-top: 1px solid var(--paper-dark); }
+  .about-cta .section-wrap { text-align: center; padding: 72px 56px; }
+  .about-cta .section-label { justify-content: center; }
+  .about-cta .section-label::before { display: none; }
+  .cta-title { font-family: 'Sarina', serif; font-size: clamp(32px, 4vw, 56px); color: var(--ink); margin: 12px 0 20px; line-height: 1.15; }
+  .cta-body { font-size: 16px; color: var(--mid); line-height: 1.75; max-width: 480px; margin: 0 auto 36px; }
+  .cta-actions { display: flex; gap: 16px; justify-content: center; align-items: center; }
+  .btn-primary {
+    background: var(--ink); color: var(--paper);
+    padding: 15px 36px; font-family: var(--font-condensed); font-weight: 700;
+    font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase;
+    text-decoration: none; transition: background 0.25s;
+  }
+  .btn-primary:hover { background: var(--coral); }
+  .btn-ghost {
+    font-family: var(--font-condensed); font-size: 13px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none;
+    color: var(--mid); border-bottom: 1px solid var(--paper-dark);
+    padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+
+  /* FOOTER */
+  footer { background: var(--ink); color: rgba(245,240,232,0.4); padding: 56px 56px 24px; }
+  .footer-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+    padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 22px;
+  }
+  .footer-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .footer-logo-mark { width: 34px; height: 34px; background: var(--gold); display: flex; align-items: center; justify-content: center; font-family: 'Sarina', serif; font-size: 13px; color: var(--ink); }
+  .footer-logo-text { font-family: 'Sarina', serif; font-size: 20px; color: var(--paper); }
+  .footer-logo-text span { color: var(--gold); }
+  .footer-brand p { font-size: 13px; line-height: 1.75; max-width: 280px; }
+  .footer-col h4 { font-family: var(--font-condensed); font-weight: 600; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(245,240,232,0.55); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 10px; }
+  .footer-col a { font-size: 13px; color: rgba(245,240,232,0.35); text-decoration: none; transition: color 0.15s; }
+  .footer-col a:hover { color: var(--paper); }
+  .footer-bottom { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; font-family: var(--font-condensed); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,240,232,0.2); }
+
+  /* Animations */
+  .fade-up { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/index.html" class="nav-logo">
+    <div class="nav-logo-mark">QF</div>
+    <span class="nav-logo-text">Quick<span>Flip</span> Media</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">Workshops & Webinars</a></li>
+    <li><a href="#">Pricing</a></li>
+    <li><a href="#">Quick Tips</a></li>
+    <li><a href="#" class="active">About</a></li>
+    <li><a href="#" class="nav-cta">Contact Us</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-eyebrow">Our Story</div>
+    <h1 class="page-title">We came up<br>in newsrooms.</h1>
+    <p class="page-subtitle">Two television veterans, one simple idea: organizations have great stories. They just need a system to tell them.</p>
+  </div>
+</section>
+
+<!-- FOUNDERS STORY -->
+<section class="founders-story">
+  <div class="section-wrap">
+    <div class="story-left fade-up">
+      <div class="section-label">The Founders</div>
+
+      <div class="founder-profile">
+        <div class="founder-photo">👤</div>
+        <div class="founder-details">
+          <div class="founder-name">Samantha Morgan</div>
+          <div class="founder-title">Co-Founder</div>
+          <div class="founder-bio">20 plus years in digital media. Reporter, editor, assignment editor, and digital content manager at WVLA and WAFB. Earlier in her career she freelanced for The Advocate and contributed to Where Y'at Magazine, where she produced an interview series called The Scene, highlighting musicians and artists across Baton Rouge.</div>
+        </div>
+      </div>
+
+      <div class="founder-profile">
+        <div class="founder-photo">👤</div>
+        <div class="founder-details">
+          <div class="founder-name">Matthew White</div>
+          <div class="founder-title">Co-Founder</div>
+          <div class="founder-bio">Digital media graduate of the University of Louisiana at Lafayette. Built his career behind the camera as a videographer at WBRZ, where he captured the footage that brought hundreds of newsroom stories to life.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="story-divider"></div>
+
+    <div class="story-right fade-up" style="transition-delay:.15s">
+      <div class="section-label">The Origin</div>
+      <h2 class="section-title" style="margin-bottom:24px; margin-top:10px;">Where the idea came from</h2>
+      <div class="story-body">
+        <p>Samantha and Matthew spent their careers at competing stations in Baton Rouge, but experienced the same reality of modern media. Newsrooms move fast. A story identified in the morning could be edited and published by evening. Journalists learn to focus on what matters and communicate it clearly under constant deadline pressure.</p>
+        <div class="story-pullquote">"You do not need the latest trend to get attention. You need a moment that actually matters."</div>
+        <p>Over time, both founders began working with businesses, nonprofits, and community organizations outside of traditional media. They noticed something immediately. Many organizations were doing meaningful work every day, yet struggled to explain it. They often believed good video required big budgets or complicated production.</p>
+        <p>Meanwhile, reporters were producing stories in hours. Influencers were documenting moments as they happened. The digital world was accelerating, but traditional creative models were still operating on the slower timelines of advertising campaigns.</p>
+        <p>QuickFlip Media grew directly out of that realization. The goal was to apply what the newsroom had taught them, in a new environment, for organizations that needed a better way to show up consistently.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FULL TEAM -->
+<section class="team-section">
+  <div class="section-wrap">
+    <div class="team-header fade-up">
+      <div class="section-label">The Team</div>
+      <h2 class="section-title">The people behind the work</h2>
+    </div>
+    <div class="team-grid">
+      <div class="team-card fade-up">
+        <div class="team-photo">👤</div>
+        <div class="team-name">Samantha Morgan</div>
+        <div class="team-role">Co-Founder</div>
+        <div class="team-bio">Reporter, editor, and digital content manager with 20 plus years across Baton Rouge television and print media.</div>
+      </div>
+      <div class="team-card fade-up" style="transition-delay:.08s">
+        <div class="team-photo">👤</div>
+        <div class="team-name">Matthew White</div>
+        <div class="team-role">Co-Founder / Videographer</div>
+        <div class="team-bio">Broadcast videographer turned production lead. Shot hundreds of stories at WBRZ before co-founding QuickFlip.</div>
+      </div>
+      <div class="team-card fade-up" style="transition-delay:.16s">
+        <div class="team-photo">👤</div>
+        <div class="team-name">Team Member</div>
+        <div class="team-role">Role Title</div>
+        <div class="team-bio">A short bio that gives visitors a sense of who this person is and what they bring to the team.</div>
+      </div>
+      <div class="team-card fade-up" style="transition-delay:.08s">
+        <div class="team-photo">👤</div>
+        <div class="team-name">Team Member</div>
+        <div class="team-role">Role Title</div>
+        <div class="team-bio">A short bio that gives visitors a sense of who this person is and what they bring to the team.</div>
+      </div>
+      <div class="team-card fade-up" style="transition-delay:.16s">
+        <div class="team-photo">👤</div>
+        <div class="team-name">Team Member</div>
+        <div class="team-role">Role Title</div>
+        <div class="team-bio">A short bio that gives visitors a sense of who this person is and what they bring to the team.</div>
+      </div>
+      <div class="team-card fade-up" style="transition-delay:.24s">
+        <div class="team-photo">👤</div>
+        <div class="team-name">Team Member</div>
+        <div class="team-role">Role Title</div>
+        <div class="team-bio">A short bio that gives visitors a sense of who this person is and what they bring to the team.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="mission">
+  <div class="section-wrap">
+    <div class="fade-up">
+      <div class="section-label">Our Mission</div>
+      <h2 class="mission-title">Media that works<br>on a schedule that sticks</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:72px; margin-top:40px; align-items:start;">
+      <div class="mission-body fade-up">
+        <p>The goal of QuickFlip Media is not just to produce videos. It is to help organizations build a sustainable way to communicate through media over time.</p>
+        <p>In a world where businesses are expected to produce regular content across websites, social platforms, and marketing channels, the ability to capture meaningful moments consistently becomes far more valuable than a single large production.</p>
+        <p>We help organizations develop a practical approach to modern media. One that emphasizes clarity, efficiency, and real human moments over elaborate production and inflated budgets.</p>
+      </div>
+      <div class="mission-values fade-up" style="transition-delay:.1s">
+        <div class="mission-value">
+          <div class="mv-icon">🎯</div>
+          <div>
+            <div class="mv-name">Purpose Over Production</div>
+            <div class="mv-body">Every piece of content starts with a reason. We figure that out first.</div>
+          </div>
+        </div>
+        <div class="mission-value">
+          <div class="mv-icon">⚡</div>
+          <div>
+            <div class="mv-name">Speed and Efficiency</div>
+            <div class="mv-body">Newsroom-trained means deadline-trained. We move fast without cutting corners.</div>
+          </div>
+        </div>
+        <div class="mission-value">
+          <div class="mv-icon">🤝</div>
+          <div>
+            <div class="mv-name">Built to Last</div>
+            <div class="mv-body">We build systems, not just deliverables. Our clients keep creating long after the project ends.</div>
+          </div>
+        </div>
+        <div class="mission-value">
+          <div class="mv-icon">📍</div>
+          <div>
+            <div class="mv-name">Rooted in Baton Rouge</div>
+            <div class="mv-body">We know this community. We love covering it. That local knowledge shows in the work.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="about-cta">
+  <div class="section-wrap">
+    <div class="fade-up">
+      <div class="section-label">Work With Us</div>
+      <h2 class="cta-title">Ready to tell<br>your story?</h2>
+      <p class="cta-body">We work with businesses, nonprofits, and creative organizations that want to communicate more clearly through video, photo, and web.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn-primary">Get in Touch</a>
+        <a href="#" class="btn-ghost">View Pricing</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <div class="footer-logo-mark">QF</div>
+        <span class="footer-logo-text">Quick<span>Flip</span> Media</span>
+      </div>
+      <p>Video, photo, and web production built on newsroom principles. We help organizations tell their stories on a schedule that works.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Video Production</a></li>
+        <li><a href="#">Photo Production</a></li>
+        <li><a href="#">Website Design</a></li>
+        <li><a href="#">Pricing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Learn</h4>
+      <ul>
+        <li><a href="#">Workshops</a></li>
+        <li><a href="#">Webinar Wednesday</a></li>
+        <li><a href="#">Quick Tips</a></li>
+        <li><a href="#">Newsletter</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Google Reviews</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 QuickFlip Media · Baton Rouge, LA</span>
+    <span>Built on newsroom principles</span>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

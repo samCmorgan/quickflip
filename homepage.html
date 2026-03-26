@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuickFlip Media</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarina&family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Nunito:wght@300;400;500;600;700;800&family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #222e50;
+    --paper: #fffff0;
+    --paper-mid: #f5f5e0;
+    --paper-dark: #e8e8cc;
+    --mid: #4a5568;
+    --light: #8896a8;
+    --gold: #eeba2b;        /* dark backgrounds only */
+    --coral: #ff6f59;       /* light backgrounds */
+    --sky: #57c2ef;
+    --font-display: 'Sarina', Georgia, serif;
+    --font-body: 'Nunito', sans-serif;
+    --font-condensed: 'Nunito Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ─────────────────────────────────── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 56px;
+    height: 64px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo-mark {
+    width: 38px;
+    height: 38px;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Sarina', Georgia, serif;
+    font-size: 16px;
+    color: var(--ink);
+    flex-shrink: 0;
+  }
+  .nav-logo-text {
+    font-family: 'Sarina', Georgia, serif;
+    font-size: 20px;
+    color: var(--paper);
+    letter-spacing: 0.01em;
+  }
+  .nav-logo-text span { color: var(--gold); }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    align-items: center;
+  }
+  .nav-links a {
+    font-family: var(--font-condensed);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(245,240,232,0.5);
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0; right: 0;
+    height: 1px;
+    background: var(--sky);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+  }
+  .nav-links a:hover { color: var(--paper); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-cta {
+    font-family: var(--font-condensed) !important;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink) !important;
+    background: var(--paper);
+    padding: 9px 22px;
+    transition: background 0.2s, color 0.2s !important;
+  }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: var(--gold) !important; color: white !important; }
+
+  /* ── ROTATING BANNER ─────────────────────── */
+  .rotating-banner {
+    background: var(--gold);
+    overflow: hidden;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .rotating-banner::before,
+  .rotating-banner::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 60px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .rotating-banner::before { left: 0; background: linear-gradient(to right, var(--gold), transparent); }
+  .rotating-banner::after { right: 0; background: linear-gradient(to left, var(--gold), transparent); }
+  .banner-track {
+    display: flex;
+    animation: banner-scroll 35s linear infinite;
+    white-space: nowrap;
+  }
+  .banner-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 36px;
+    font-family: var(--font-condensed);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.65);
+    flex-shrink: 0;
+  }
+  .banner-item strong { color: var(--ink); }
+  .banner-diamond {
+    width: 5px; height: 5px;
+    background: rgba(0,0,0,0.3);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+  @keyframes banner-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── HERO ─────────────────────────────────── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 104px);
+    max-height: 800px;
+  }
+  .hero-text {
+    padding: 80px 64px 80px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-text::after {
+    content: '';
+    position: absolute;
+    top: -100px; right: -80px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,111,89,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-condensed);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: slideUp 0.6s ease 0.2s forwards;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 32px; height: 1px;
+    background: var(--coral);
+  }
+  .hero-headline {
+    font-family: 'Sarina', Georgia, serif;
+    font-size: clamp(38px, 4vw, 60px);
+    line-height: 1.1;
+    letter-spacing: 0em;
+    margin-bottom: 8px;
+    color: var(--ink);
+    opacity: 0;
+    animation: slideUp 0.6s ease 0.35s forwards;
+  }
+  /* Cycling headline words */
+  .headline-cycle {
+    display: block;
+    height: 1.15em;
+    overflow: hidden;
+    position: relative;
+  }
+  .cycle-word {
+    display: block;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(42px, 4.4vw, 66px);
+    color: var(--mid);
+    position: absolute;
+    top: 0; left: 0;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .cycle-word.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .cycle-word.exit {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  .hero-body {
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--mid);
+    max-width: 460px;
+    margin-bottom: 44px;
+    margin-top: 24px;
+    opacity: 0;
+    animation: slideUp 0.6s ease 0.5s forwards;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    opacity: 0;
+    animation: slideUp 0.6s ease 0.65s forwards;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 15px 34px;
+    font-family: var(--font-condensed);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.25s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--coral);
+    transform: translateX(-101%);
+    transition: transform 0.3s ease;
+    z-index: 0;
+  }
+  .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary span { position: relative; z-index: 1; }
+  .btn-ghost {
+    font-family: var(--font-condensed);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--mid);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s, gap 0.2s;
+  }
+  .btn-ghost:hover { color: var(--ink); gap: 12px; }
+  .btn-ghost::after { content: '→'; }
+
+  .hero-image {
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-image-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(160deg, #2d3d6b 0%, #1a2744 60%, #222e50 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: rgba(255,255,255,0.12);
+    font-family: var(--font-condensed);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .hero-image-placeholder .ph-icon { font-size: 44px; opacity: 0.3; }
+
+  /* Animated overlay lines on hero image */
+  .hero-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(255,255,255,0.015) 3px,
+      rgba(255,255,255,0.015) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 32px 36px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    z-index: 2;
+  }
+  .stat { }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--paper);
+    margin-bottom: 5px;
+    transition: color 0.3s;
+  }
+  .stat:hover .stat-num { color: var(--gold); }
+  .stat-label {
+    font-family: var(--font-condensed);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ── MARQUEE ─────────────────────────────── */
+  .marquee-band {
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    overflow: hidden;
+    padding: 16px 0;
+  }
+  .marquee-inner {
+    display: flex;
+    animation: marquee 32s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 0 44px;
+    font-family: var(--font-condensed);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.3);
+    flex-shrink: 0;
+    transition: color 0.2s;
+  }
+  .marquee-item:hover { color: rgba(245,240,232,0.7); }
+  .marquee-dot { width: 4px; height: 4px; background: var(--gold); border-radius: 50%; flex-shrink: 0; opacity: 0.6; }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── SECTION UTILITIES ───────────────────── */
+  .section-wrap { padding: 88px 56px; max-width: 1280px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-condensed);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::before { content: ''; display: inline-block; width: 26px; height: 1px; background: var(--coral); }
+  .section-title {
+    font-family: var(--font-body);
+    font-size: clamp(32px, 3vw, 50px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  /* ── SERVICES ────────────────────────────── */
+  .services { background: var(--paper-mid); border-top: 1px solid var(--paper-dark); border-bottom: 1px solid var(--paper-dark); }
+  .services-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 56px;
+  }
+  .services-intro {
+    max-width: 380px;
+    font-size: 16px;
+    color: var(--mid);
+    line-height: 1.7;
+    margin-top: 16px;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--paper-dark);
+  }
+  .service-card {
+    background: var(--paper-mid);
+    padding: 40px 32px;
+    transition: background 0.25s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--coral);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+  .service-card:hover { background: var(--paper); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card-inner { position: relative; z-index: 1; }
+  .service-num { display: none; }
+  .service-name {
+    font-family: var(--font-body);
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+  .service-desc {
+    font-size: 14px;
+    color: var(--mid);
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+  .service-link {
+    font-family: var(--font-condensed);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--paper-dark);
+    padding-bottom: 3px;
+    transition: gap 0.2s, border-color 0.2s;
+  }
+  .service-link:hover { gap: 12px; border-color: var(--ink); }
+
+  /* ── PHOTO GALLERY (replaces principles) ─── */
+  .gallery-section {
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+  .gallery-section .section-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 0;
+    padding: 0;
+    max-width: 100%;
+    align-items: stretch;
+  }
+  .gallery-text {
+    padding: 72px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .gallery-text .section-label { color: var(--gold); }
+  .gallery-text .section-label::before { background: var(--gold); }
+  .gallery-title {
+    font-family: var(--font-body);
+    font-size: clamp(30px, 2.8vw, 44px);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--paper);
+    margin-top: 12px;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+  .gallery-body {
+    font-size: 15px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.8;
+    margin-bottom: 36px;
+  }
+
+  /* Principles list inside gallery text panel */
+  .gallery-principles {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .gallery-principle {
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    cursor: default;
+    transition: padding-left 0.25s;
+  }
+  .gallery-principle:hover { padding-left: 8px; }
+  .gp-num {
+    font-family: var(--font-condensed);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .gp-name {
+    font-family: var(--font-condensed);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--paper);
+    margin-bottom: 3px;
+  }
+  .gp-body {
+    font-size: 13px;
+    color: rgba(255,255,255,0.38);
+    line-height: 1.6;
+  }
+
+  /* Photo slideshow */
+  .gallery-slides {
+    position: relative;
+    overflow: hidden;
+    min-height: 520px;
+  }
+  .gallery-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .gallery-slide.active { opacity: 1; }
+  .gallery-slide-inner {
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    font-family: var(--font-condensed);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .slide-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: rgba(255,255,255,0.18);
+    font-family: var(--font-condensed);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .slide-placeholder span { font-size: 36px; opacity: 0.25; }
+  /* Give each slide a slightly different navy shade for visual interest */
+  .gallery-slide:nth-child(1) .slide-placeholder { background: #1a2744; }
+  .gallery-slide:nth-child(2) .slide-placeholder { background: #1e3058; }
+  .gallery-slide:nth-child(3) .slide-placeholder { background: #16223c; }
+  .gallery-slide:nth-child(4) .slide-placeholder { background: #222e50; }
+
+  .gallery-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 20px 28px;
+    background: linear-gradient(to top, rgba(10,16,40,0.92) 0%, transparent 100%);
+    font-family: var(--font-condensed);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+  }
+  .gallery-dots {
+    display: flex;
+    gap: 8px;
+  }
+  .gallery-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    transition: background 0.3s, transform 0.3s;
+    cursor: pointer;
+  }
+  .gallery-dot.active { background: var(--gold); transform: scale(1.3); }
+
+  /* ── QUICK TIPS ──────────────────────────── */
+  .tips { border-bottom: 1px solid var(--paper-dark); }
+  .tips-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 52px;
+  }
+  .tips-see-all {
+    font-family: var(--font-condensed);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--mid);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s, gap 0.2s;
+  }
+  .tips-see-all:hover { color: var(--ink); gap: 12px; }
+  .tips-see-all::after { content: '→'; }
+  .tips-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  .tip-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--paper-dark);
+    margin-bottom: 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--light);
+    font-family: var(--font-condensed);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: opacity 0.25s;
+    cursor: pointer;
+  }
+  .tip-img:hover { opacity: 0.8; }
+  .tip-tag {
+    font-family: var(--font-condensed);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 10px;
+  }
+  .tip-headline {
+    font-family: var(--font-body);
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+  .tip-card:not(.featured) .tip-headline { font-size: 18px; }
+  .tip-summary { font-size: 14px; color: var(--mid); line-height: 1.7; margin-bottom: 14px; }
+  .tip-meta {
+    font-family: var(--font-condensed);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--light);
+  }
+
+  /* ── ABOUT ───────────────────────────────── */
+  .about { background: var(--paper-mid); border-top: 1px solid var(--paper-dark); }
+  .about .section-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 0;
+    align-items: start;
+  }
+  .about-divider { background: var(--paper-dark); }
+  .about-left { padding-right: 72px; }
+  .about-right { padding-left: 72px; }
+  .about-headline {
+    font-family: 'Sarina', Georgia, serif;
+    font-size: clamp(32px, 3.2vw, 48px);
+    line-height: 1.15;
+    letter-spacing: 0em;
+    margin-bottom: 22px;
+    margin-top: 14px;
+  }
+  .about-headline em { font-style: italic; color: var(--mid); }
+  .about-body {
+    font-size: 15px;
+    color: var(--mid);
+    line-height: 1.85;
+  }
+  .about-body p { margin-bottom: 18px; }
+  .about-body p:last-child { margin-bottom: 0; }
+  .about-pullquote {
+    font-family: var(--font-body);
+    font-size: 19px;
+    font-style: italic;
+    font-weight: 600;
+    line-height: 1.55;
+    color: var(--ink);
+    padding: 26px 0 26px 24px;
+    border-left: 3px solid var(--coral);
+    margin: 28px 0;
+  }
+  .founders {
+    margin-top: 40px;
+    padding-top: 36px;
+    border-top: 1px solid var(--paper-dark);
+  }
+  .founders-label {
+    font-family: var(--font-condensed);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 22px;
+  }
+  .founder {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 22px;
+    padding: 18px;
+    background: var(--paper);
+    transition: background 0.2s;
+  }
+  .founder:last-of-type { margin-bottom: 0; }
+  .team-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 22px;
+    font-family: var(--font-condensed);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    border-bottom: 2px solid var(--coral);
+    padding-bottom: 3px;
+    transition: gap 0.2s, color 0.2s;
+  }
+  .team-link:hover { gap: 14px; color: var(--coral); }
+  .founder:hover { background: var(--paper-dark); }
+  .founder-avatar {
+    width: 48px; height: 48px;
+    background: var(--paper-dark);
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--light);
+  }
+  .founder-name {
+    font-family: var(--font-condensed);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .founder-bio { font-size: 13px; color: var(--mid); line-height: 1.55; }
+
+  /* ── WEBINAR CTA ─────────────────────────── */
+  .webinar-cta { background: var(--ink); color: var(--paper); }
+  .webinar-cta .section-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+  .webinar-cta .section-label { color: var(--gold); }
+  .webinar-cta .section-label::before { background: var(--gold); }
+  .webinar-title {
+    font-family: var(--font-body);
+    font-size: clamp(28px, 3vw, 44px);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--paper);
+    margin-top: 12px;
+    margin-bottom: 16px;
+  }
+  .webinar-desc {
+    font-size: 15px;
+    color: rgba(245,240,232,0.5);
+    line-height: 1.75;
+  }
+  .webinar-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .webinar-detail {
+    padding: 22px 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    transition: background 0.2s;
+  }
+  .webinar-detail:last-of-type { border-bottom: none; }
+  .webinar-detail:hover { background: rgba(255,255,255,0.03); }
+  .webinar-detail-label {
+    font-family: var(--font-condensed);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .webinar-detail-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--paper);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .webinar-detail-meta {
+    font-family: var(--font-condensed);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 10px;
+  }
+  .webinar-detail-link {
+    font-family: var(--font-condensed);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--paper);
+    background: var(--gold);
+    padding: 7px 18px;
+    display: inline-block;
+    transition: background 0.2s;
+  }
+  .webinar-detail-link:hover { background: #d4a520; }
+  .webinar-detail-link.ghost {
+    background: transparent;
+    color: rgba(255,255,255,0.45);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .webinar-detail-link.ghost:hover { background: rgba(255,255,255,0.05); color: var(--paper); }
+
+  /* ── TESTIMONIALS ────────────────────────── */
+  .testimonials { border-top: 1px solid var(--paper-dark); }
+  .testi-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    margin-top: 52px;
+    align-items: start;
+  }
+  /* Left col: written reviews with graphic images */
+  .testi-written { display: flex; flex-direction: column; gap: 20px; }
+  .testi-card {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 18px;
+    padding: 24px;
+    background: var(--paper-mid);
+    border-top: 2px solid var(--paper-dark);
+    transition: border-color 0.25s, background 0.25s, transform 0.25s;
+    align-items: start;
+  }
+  .testi-card:hover {
+    border-top-color: var(--coral);
+    background: var(--paper);
+    transform: translateY(-2px);
+  }
+  .testi-graphic {
+    width: 72px;
+    height: 72px;
+    background: var(--paper-dark);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .testi-graphic img { width: 100%; height: 100%; object-fit: cover; }
+  .testi-content {}
+  .stars { color: var(--coral); font-size: 11px; margin-bottom: 10px; letter-spacing: 2px; }
+  .testi-text {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.7;
+    color: var(--mid);
+    margin-bottom: 14px;
+  }
+  .testi-author {
+    font-family: var(--font-condensed);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .testi-author::before { content: '—'; color: var(--coral); }
+  .testi-org { color: var(--light); font-weight: 500; }
+
+  /* Right col: video testimonials */
+  .testi-videos { display: flex; flex-direction: column; gap: 20px; }
+  .testi-video-label {
+    font-family: var(--font-condensed);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .testi-video-label::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--coral); }
+  .testi-video-title {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .video-card {
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .video-card:hover .play-btn { transform: translate(-50%, -50%) scale(1.1); }
+  .video-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #1a2744 0%, #2a3f6e 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    color: rgba(255,255,255,0.2);
+    font-family: var(--font-condensed);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .play-btn {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 56px; height: 56px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    z-index: 2;
+  }
+  .play-btn::after {
+    content: '';
+    width: 0; height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 16px solid var(--ink);
+    margin-left: 4px;
+  }
+  .video-caption {
+    padding: 14px 16px;
+    background: var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .video-caption-name {
+    font-family: var(--font-condensed);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+  .video-caption-org {
+    font-family: var(--font-condensed);
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+  }
+  .video-slot {
+    border: 1px solid var(--paper-dark);
+    overflow: hidden;
+    transition: border-color 0.25s;
+  }
+  .video-slot:hover { border-color: var(--coral); }
+
+  /* ── FOOTER ──────────────────────────────── */
+  footer {
+    background: var(--ink);
+    color: rgba(245,240,232,0.4);
+    padding: 64px 56px 28px;
+  }
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 52px;
+    padding-bottom: 44px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 24px;
+  }
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .footer-logo-mark {
+    width: 34px; height: 34px;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Sarina', Georgia, serif;
+    font-size: 13px;
+    color: var(--ink);
+    flex-shrink: 0;
+  }
+  .footer-logo-text {
+    font-family: 'Sarina', Georgia, serif;
+    font-size: 20px;
+    color: var(--paper);
+  }
+  .footer-logo-text span { color: var(--gold); }
+  .footer-brand p { font-size: 13px; line-height: 1.75; max-width: 280px; }
+  .footer-social { display: flex; gap: 14px; margin-top: 22px; }
+  .footer-social a {
+    width: 32px; height: 32px;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    text-decoration: none;
+    color: rgba(245,240,232,0.3);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .footer-social a:hover { border-color: var(--gold); color: var(--gold); }
+  .footer-col h4 {
+    font-family: var(--font-condensed);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.55);
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 10px; }
+  .footer-col a {
+    font-size: 13px;
+    color: rgba(245,240,232,0.35);
+    text-decoration: none;
+    transition: color 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .footer-col a:hover { color: var(--paper); }
+  .footer-col a:hover::before { content: '›'; color: var(--gold); }
+  .footer-bottom {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-condensed);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.2);
+  }
+
+  /* ── ANIMATIONS ──────────────────────────── */
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">QF</div>
+    <span class="nav-logo-text">Quick<span>Flip</span> Media</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">Workshops & Webinars</a></li>
+    <li><a href="#">Pricing</a></li>
+    <li><a href="#">Quick Tips</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#" class="nav-cta">Contact Us</a></li>
+  </ul>
+</nav>
+
+<!-- ROTATING BANNER -->
+<div class="rotating-banner">
+    <div class="banner-track">
+      <div class="banner-item"><strong>Now Enrolling</strong> The Interview Formula Workshop <span class="banner-diamond"></span></div>
+      <div class="banner-item"><strong>Webinar Wednesday</strong> Free. Every Wednesday. 12PM CST <span class="banner-diamond"></span></div>
+      <div class="banner-item"><strong>New Article</strong> Is TikTok Still Worth Your Time in 2026? <span class="banner-diamond"></span></div>
+      <div class="banner-item"><strong>Quick Tip</strong> The Real Secret to Social Media This Year <span class="banner-diamond"></span></div>
+      <div class="banner-item"><strong>Workshop</strong> Video Production Bootcamp. 3 Days. 1 Finished Video. <span class="banner-diamond"></span></div>
+      <div class="banner-item"><strong>Now Enrolling</strong> The Interview Formula Workshop <span class="banner-diamond"></span></div>
+      <div class="banner-item"><strong>Webinar Wednesday</strong> Free. Every Wednesday. 12PM CST <span class="banner-diamond"></span></div>
+      <div class="banner-item"><strong>New Article</strong> Is TikTok Still Worth Your Time in 2026? <span class="banner-diamond"></span></div>
+      <div class="banner-item"><strong>Quick Tip</strong> The Real Secret to Social Media This Year <span class="banner-diamond"></span></div>
+      <div class="banner-item"><strong>Workshop</strong> Video Production Bootcamp. 3 Days. 1 Finished Video. <span class="banner-diamond"></span></div>
+    </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Digital Media Strategy & Production</div>
+    <h1 class="hero-headline">
+      Real moments.<br>
+      <span class="headline-cycle">
+        <span class="cycle-word active">Usable content.</span>
+        <span class="cycle-word">Told with clarity.</span>
+        <span class="cycle-word">Built to last.</span>
+        <span class="cycle-word">Shared consistently.</span>
+      </span>
+    </h1>
+    <p class="hero-body">We bring newsroom thinking to content creation. That means knowing what matters, capturing it well, and getting it out the door on a schedule your audience can count on.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary"><span>See Our Work</span></a>
+      <a href="#" class="btn-ghost">View Pricing</a>
+    </div>
+  </div>
+  <div class="hero-image">
+    <div class="hero-image-placeholder">
+      <span class="ph-icon">🎬</span>
+      <p>Your hero image or reel here</p>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Years in Newsrooms</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Core Services</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100s</div>
+        <div class="stat-label">Stories Captured</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-band">
+  <div class="marquee-inner">
+    <div class="marquee-item"><span>Video Strategy</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span>Photo Production</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span>Website Design</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span>Workshops & Webinars</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span>Interview Coaching</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span>Content Systems</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span>Newsroom Principles</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span>Baton Rouge, LA</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span>Video Strategy</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span>Photo Production</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span>Website Design</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span>Workshops & Webinars</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span>Interview Coaching</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span>Content Systems</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span>Newsroom Principles</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span>Baton Rouge, LA</span><span class="marquee-dot"></span></div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="section-wrap">
+    <div class="services-header fade-up">
+      <div>
+        <div class="section-label">What We Do</div>
+        <h2 class="section-title">Every format.<br>One clear approach.</h2>
+        <p class="services-intro">Whether you need a single shoot or a full content system, we build around what you actually have to say. Not around what's trending.</p>
+      </div>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-up">
+        <div class="service-card-inner">
+          <div class="service-num">01</div>
+          <div class="service-name">Video Strategy & Production</div>
+          <div class="service-desc">Good video starts with a clear idea, not expensive equipment. We help you find the story worth telling, then we go get it.</div>
+          <a href="#" class="service-link">View Pricing →</a>
+        </div>
+      </div>
+      <div class="service-card fade-up" style="transition-delay:.1s">
+        <div class="service-card-inner">
+          <div class="service-num">02</div>
+          <div class="service-name">Photo Production</div>
+          <div class="service-desc">A single strong image does a lot of work. We capture the moments your audience needs to see, for your site, your socials, and everywhere in between.</div>
+          <a href="#" class="service-link">View Pricing →</a>
+        </div>
+      </div>
+      <div class="service-card fade-up" style="transition-delay:.2s">
+        <div class="service-card-inner">
+          <div class="service-num">03</div>
+          <div class="service-name">Website Design</div>
+          <div class="service-desc">Your site should do more than look good. We build around your content strategy so the whole thing actually pulls its weight.</div>
+          <a href="#" class="service-link">View Pricing →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY / PRINCIPLES -->
+<section class="gallery-section">
+  <div class="section-wrap">
+    <div class="gallery-text fade-up">
+      <div class="section-label">How We Think</div>
+      <h2 class="gallery-title">The QuickFlip Principles</h2>
+      <p class="gallery-body">These ideas come straight from the newsroom. They shape how we work and what we help clients build.</p>
+      <div class="gallery-principles">
+        <div class="gallery-principle">
+          <div class="gp-num">01</div>
+          <div>
+            <div class="gp-name">Clarity Before Production</div>
+            <div class="gp-body">Know what you want to say before you pick up the camera.</div>
+          </div>
+        </div>
+        <div class="gallery-principle">
+          <div class="gp-num">02</div>
+          <div>
+            <div class="gp-name">Real Moments Connect</div>
+            <div class="gp-body">An honest, unscripted moment will outperform a polished production more often than you think.</div>
+          </div>
+        </div>
+        <div class="gallery-principle">
+          <div class="gp-num">03</div>
+          <div>
+            <div class="gp-name">Consistency Over Perfection</div>
+            <div class="gp-body">Your audience rewards presence more than polish. Show up regularly.</div>
+          </div>
+        </div>
+        <div class="gallery-principle">
+          <div class="gp-num">04</div>
+          <div>
+            <div class="gp-name">Speed Creates Relevance</div>
+            <div class="gp-body">Content that reflects right now gets attention. The newsroom figured that out decades ago.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-slides" id="gallerySlides">
+      <div class="gallery-slide active">
+        <div class="slide-placeholder">
+          <span>📷</span>
+          <p>Photo 1 — Behind the scenes</p>
+        </div>
+      </div>
+      <div class="gallery-slide">
+        <div class="slide-placeholder">
+          <span>🎬</span>
+          <p>Photo 2 — On location</p>
+        </div>
+      </div>
+      <div class="gallery-slide">
+        <div class="slide-placeholder">
+          <span>🎙️</span>
+          <p>Photo 3 — In the studio</p>
+        </div>
+      </div>
+      <div class="gallery-slide">
+        <div class="slide-placeholder">
+          <span>💻</span>
+          <p>Photo 4 — In the edit</p>
+        </div>
+      </div>
+      <div class="gallery-caption">
+        <span id="galleryLabel">Behind the scenes</span>
+        <div class="gallery-dots" id="galleryDots">
+          <div class="gallery-dot active" data-index="0"></div>
+          <div class="gallery-dot" data-index="1"></div>
+          <div class="gallery-dot" data-index="2"></div>
+          <div class="gallery-dot" data-index="3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK TIPS -->
+<section class="tips">
+  <div class="section-wrap">
+    <div class="tips-header fade-up">
+      <div>
+        <div class="section-label">Quick Tips</div>
+        <h2 class="section-title">What we know,<br>shared freely</h2>
+      </div>
+      <a href="#" class="tips-see-all">View Full Archive</a>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card featured fade-up">
+        <div class="tip-img">[ Featured image ]</div>
+        <div class="tip-tag">Video Production</div>
+        <h3 class="tip-headline">Why Editing Takes So Long and How to Fix It</h3>
+        <p class="tip-summary">Editing stalls for one reason more than any other: too many decisions left until the end. Here is a practical look at how to simplify your workflow and actually finish what you start.</p>
+        <div class="tip-meta">5 min read</div>
+      </div>
+      <div class="tip-card fade-up" style="transition-delay:.1s">
+        <div class="tip-img">[ Image ]</div>
+        <div class="tip-tag">Platform Strategy</div>
+        <h3 class="tip-headline">Is TikTok Still Worth Your Time?</h3>
+        <p class="tip-summary">The platform keeps shifting. Here is how to decide whether it belongs in your strategy this year.</p>
+        <div class="tip-meta">3 min read</div>
+      </div>
+      <div class="tip-card fade-up" style="transition-delay:.2s">
+        <div class="tip-img">[ Image ]</div>
+        <div class="tip-tag">2026 Strategy</div>
+        <h3 class="tip-headline">The Real Secret to Social in 2026</h3>
+        <p class="tip-summary">Trends cycle. The organizations that win on social are the ones that show up with something real, on a regular basis.</p>
+        <div class="tip-meta">4 min read</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="section-wrap">
+    <div class="about-left fade-up">
+      <div class="section-label">Who We Are</div>
+      <h2 class="about-headline">We came up<br><em>in newsrooms.</em></h2>
+      <div class="about-body">
+        <p>QuickFlip Media was started by Samantha Morgan and Matthew White, two media professionals who built their careers in television newsrooms right here in Baton Rouge.</p>
+        <div class="about-pullquote">"You do not need the latest trend to get attention. You need a moment that actually matters."</div>
+        <p>After years in local news, they kept noticing the same thing. Organizations were doing great work every day, but could not find a way to show it. The stories were there. A system to tell them consistently was not.</p>
+      </div>
+    </div>
+    <div class="about-divider"></div>
+    <div class="about-right fade-up" style="transition-delay:.15s">
+      <div class="about-body">
+        <p>In a newsroom, a story can go from idea to published in a single afternoon. You learn fast what is worth covering, how to work under pressure, and how to communicate clearly to people who are not paying close attention.</p>
+        <p>That is the discipline QuickFlip brings to businesses, nonprofits, and organizations that want to show up online without building a full production studio to do it.</p>
+      </div>
+      <div class="founders">
+        <div class="founders-label">The Founders</div>
+        <div class="founder">
+          <div class="founder-avatar">👤</div>
+          <div>
+            <div class="founder-name">Samantha Morgan</div>
+            <div class="founder-bio">20 plus years in digital media. Reporter, editor, and digital content manager at WVLA and WAFB. Freelancer for The Advocate and Where Y'at Magazine.</div>
+          </div>
+        </div>
+        <div class="founder">
+          <div class="founder-avatar">👤</div>
+          <div>
+            <div class="founder-name">Matthew White</div>
+            <div class="founder-bio">Digital media graduate of UL Lafayette. Videographer at WBRZ, where he shot the footage behind hundreds of stories.</div>
+          </div>
+        </div>
+        <a href="/about" class="team-link">Meet the full team →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEBINAR CTA -->
+<section class="webinar-cta">
+  <div class="section-wrap">
+    <div class="webinar-left fade-up">
+      <div class="section-label">Learn With Us</div>
+      <h2 class="webinar-title">Free weekly sessions.<br>Real, practical skills.</h2>
+      <p class="webinar-desc">Every Wednesday at 12PM CST we focus on one topic in video, content creation, or media production. It is free, it is live, and you will actually walk away with something useful.</p>
+    </div>
+    <div class="webinar-right fade-up" style="transition-delay:.1s">
+      <div class="webinar-detail">
+        <div class="webinar-detail-label">Webinar Wednesday</div>
+        <div class="webinar-detail-title">AI Tools for Content Creation</div>
+        <div class="webinar-detail-meta">Every Wednesday · 12PM CST · Free to attend</div>
+        <a href="#" class="webinar-detail-link">Register Free →</a>
+      </div>
+      <div class="webinar-detail">
+        <div class="webinar-detail-label">In-Person Workshop</div>
+        <div class="webinar-detail-title">The Interview Formula</div>
+        <div class="webinar-detail-meta">One Day · Baton Rouge · Seats Limited</div>
+        <a href="#" class="webinar-detail-link ghost">Enroll Now →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-wrap">
+    <div class="fade-up">
+      <div class="section-label">What People Say</div>
+      <h2 class="section-title">Straight from<br>the people we work with</h2>
+    </div>
+    <div class="testi-layout">
+
+      <!-- Written reviews with graphic images -->
+      <div class="testi-written">
+        <div class="testi-card fade-up" style="transition-delay:.05s">
+          <div class="testi-graphic">🏢</div>
+          <div class="testi-content">
+            <div class="stars">★★★★★</div>
+            <p class="testi-text">QuickFlip changed how we think about content. We went from one video a quarter to posting every week, and we did it without spending more money.</p>
+            <div class="testi-author">Client Name <span class="testi-org">/ Organization</span></div>
+          </div>
+        </div>
+        <div class="testi-card fade-up" style="transition-delay:.12s">
+          <div class="testi-graphic">🎓</div>
+          <div class="testi-content">
+            <div class="stars">★★★★★</div>
+            <p class="testi-text">The Interview Formula workshop was exactly what we needed. Our team left with real skills and a finished video. Samantha is a great teacher.</p>
+            <div class="testi-author">Workshop Attendee <span class="testi-org">/ Baton Rouge</span></div>
+          </div>
+        </div>
+        <div class="testi-card fade-up" style="transition-delay:.19s">
+          <div class="testi-graphic">💙</div>
+          <div class="testi-content">
+            <div class="stars">★★★★★</div>
+            <p class="testi-text">Great communication, solid production, and they got our brand right away. The site they built for us does more work than anything else in our marketing.</p>
+            <div class="testi-author">Client Name <span class="testi-org">/ Nonprofit</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video testimonials -->
+      <div class="testi-videos fade-up" style="transition-delay:.1s">
+        <div class="testi-video-label">Video Reviews</div>
+        <div class="testi-video-title">Hear it directly from our clients</div>
+
+        <div class="video-slot">
+          <div class="video-card">
+            <div class="video-placeholder">
+              <p>Client video testimonial 1</p>
+            </div>
+            <div class="play-btn"></div>
+          </div>
+          <div class="video-caption">
+            <span class="video-caption-name">Client Name</span>
+            <span class="video-caption-org">Organization / Role</span>
+          </div>
+        </div>
+
+        <div class="video-slot" style="margin-top: 16px;">
+          <div class="video-card">
+            <div class="video-placeholder">
+              <p>Client video testimonial 2</p>
+            </div>
+            <div class="play-btn"></div>
+          </div>
+          <div class="video-caption">
+            <span class="video-caption-name">Client Name</span>
+            <span class="video-caption-org">Organization / Role</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <div class="footer-logo-mark">QF</div>
+        <span class="footer-logo-text">Quick<span>Flip</span> Media</span>
+      </div>
+      <p>Video, photo, and web production built on newsroom principles. We help organizations tell their stories on a schedule that works.</p>
+      <div class="footer-social">
+        <a href="#">📸</a><a href="#">👥</a><a href="#">💼</a><a href="#">▶️</a><a href="#">🎵</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Video Production</a></li>
+        <li><a href="#">Photo Production</a></li>
+        <li><a href="#">Website Design</a></li>
+        <li><a href="#">Pricing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Learn</h4>
+      <ul>
+        <li><a href="#">Workshops</a></li>
+        <li><a href="#">Webinar Wednesday</a></li>
+        <li><a href="#">Quick Tips</a></li>
+        <li><a href="#">Newsletter</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Google Reviews</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 QuickFlip Media · Baton Rouge, LA</span>
+    <span>Built on newsroom principles</span>
+  </div>
+</footer>
+
+<script>
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Cycling hero headline
+  const words = document.querySelectorAll('.cycle-word');
+  let current = 0;
+  setInterval(() => {
+    words[current].classList.remove('active');
+    words[current].classList.add('exit');
+    setTimeout(() => words[current].classList.remove('exit'), 500);
+    current = (current + 1) % words.length;
+    words[current].classList.add('active');
+  }, 2800);
+
+  // Photo gallery autoplay
+  const slides = document.querySelectorAll('.gallery-slide');
+  const dots = document.querySelectorAll('.gallery-dot');
+  const labels = ['Behind the scenes', 'On location', 'In the studio', 'In the edit'];
+  const labelEl = document.getElementById('galleryLabel');
+  let slideIndex = 0;
+
+  function goToSlide(n) {
+    slides[slideIndex].classList.remove('active');
+    dots[slideIndex].classList.remove('active');
+    slideIndex = (n + slides.length) % slides.length;
+    slides[slideIndex].classList.add('active');
+    dots[slideIndex].classList.add('active');
+    if (labelEl) labelEl.textContent = labels[slideIndex];
+  }
+
+  // Click dots to navigate
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => goToSlide(parseInt(dot.dataset.index)));
+  });
+
+  // Auto-advance every 4 seconds
+  setInterval(() => goToSlide(slideIndex + 1), 4000);
+</script>
+</body>
+</html>

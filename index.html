@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuickFlip Media — Design Mockups</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarina&family=Nunito:wght@400;600;800&family=Nunito+Sans:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #222e50;
+    --paper: #fffff0;
+    --paper-mid: #f5f5e0;
+    --paper-dark: #e8e8cc;
+    --mid: #4a5568;
+    --light: #8896a8;
+    --gold: #eeba2b;
+    --coral: #ff6f59;
+  }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--ink);
+    padding: 0 56px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--gold);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+  .logo-mark {
+    width: 36px; height: 36px;
+    background: var(--gold);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Sarina', serif;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .logo-text {
+    font-family: 'Sarina', serif;
+    font-size: 20px;
+    color: var(--paper);
+  }
+  .logo-text span { color: var(--gold); }
+  .header-meta {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--ink);
+    padding: 56px 56px 64px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .hero-inner { max-width: 1280px; margin: 0 auto; }
+  .hero-eyebrow {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-eyebrow::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--gold); }
+  .hero-title {
+    font-family: 'Sarina', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    color: var(--paper);
+    line-height: 1.1;
+    margin-bottom: 14px;
+  }
+  .hero-body {
+    font-size: 15px;
+    color: rgba(255,255,255,0.42);
+    line-height: 1.75;
+    max-width: 560px;
+  }
+  .hero-body strong { color: rgba(255,255,255,0.7); font-weight: 500; }
+
+  /* PAGES GRID */
+  .pages {
+    padding: 64px 56px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .pages-label {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .pages-label::before { content: ''; display: inline-block; width: 22px; height: 1px; background: var(--coral); }
+  .pages-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(24px, 2.5vw, 36px);
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+  }
+  .pages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .page-card {
+    border: 1px solid var(--paper-dark);
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    background: var(--paper);
+    display: block;
+  }
+  .page-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--coral);
+    box-shadow: 0 12px 32px rgba(34,46,80,0.1);
+  }
+  .page-card-preview {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Sarina', serif;
+    font-size: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-card-preview::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.15) 100%);
+  }
+  .preview-homepage { background: linear-gradient(135deg, #222e50 0%, #1a2340 100%); color: var(--gold); }
+  .preview-about { background: linear-gradient(135deg, #2d3d6b 0%, #222e50 100%); color: var(--paper); }
+  .preview-hello { background: linear-gradient(135deg, #1a2744 0%, #222e50 100%); color: var(--coral); }
+  .page-card-body { padding: 22px 24px; }
+  .page-card-tag {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .page-card-tag::before { content: ''; display: inline-block; width: 16px; height: 1px; background: var(--coral); }
+  .page-card-name {
+    font-family: 'Sarina', serif;
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .page-card-url {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 12px;
+    color: var(--light);
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .page-card-desc {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+  .page-card-cta {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 2px solid var(--coral);
+    padding-bottom: 2px;
+    transition: gap 0.2s, color 0.2s;
+  }
+  .page-card:hover .page-card-cta { gap: 10px; color: var(--coral); }
+
+  /* STATUS BADGES */
+  .badge {
+    display: inline-block;
+    border-radius: 100px;
+    padding: 3px 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .badge-ready { background: #E1F5EE; color: #085041; }
+  .badge-progress { background: #FAEEDA; color: #633806; }
+  .badge-planned { background: var(--paper-dark); color: var(--light); }
+
+  /* COMING SOON SECTION */
+  .coming-soon {
+    background: var(--paper-mid);
+    border-top: 1px solid var(--paper-dark);
+    padding: 56px 56px;
+  }
+  .coming-inner { max-width: 1280px; margin: 0 auto; }
+  .coming-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 36px;
+  }
+  .coming-card {
+    border: 1px dashed var(--paper-dark);
+    border-radius: 12px;
+    padding: 22px 20px;
+    background: var(--paper);
+  }
+  .coming-name {
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .coming-url {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 11px;
+    color: var(--light);
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .coming-desc {
+    font-size: 12px;
+    color: var(--mid);
+    line-height: 1.6;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    padding: 28px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 3px solid var(--gold);
+    margin-top: 0;
+  }
+  .footer-logo {
+    display: flex; align-items: center; gap: 10px; text-decoration: none;
+  }
+  .footer-logo-mark {
+    width: 28px; height: 28px; background: var(--gold);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Sarina', serif; font-size: 12px; color: var(--ink);
+  }
+  .footer-logo-text { font-family: 'Sarina', serif; font-size: 16px; color: var(--paper); }
+  .footer-logo-text span { color: var(--gold); }
+  .footer-meta {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.18);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">QF</div>
+    <span class="logo-text">Quick<span>Flip</span> Media</span>
+  </div>
+  <span class="header-meta">Design Mockups — March 2026</span>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Work in progress</div>
+    <h1 class="hero-title">QuickFlip Media<br>Site Mockups</h1>
+    <p class="hero-body">Visual references for the Wix Studio build. <strong>Open any page to see the intended design.</strong> Use these alongside the design brief documents when building in Wix Studio. All pages are mockups only — links between pages are not active.</p>
+  </div>
+</section>
+
+<section class="pages">
+  <div class="pages-label">Ready to build</div>
+  <h2 class="pages-title">Current mockups</h2>
+  <div class="pages-grid">
+
+    <a href="homepage.html" class="page-card">
+      <div class="page-card-preview preview-homepage">QF</div>
+      <div class="page-card-body">
+        <span class="badge badge-ready">Design complete</span>
+        <div class="page-card-tag">Primary page</div>
+        <div class="page-card-name">Homepage</div>
+        <div class="page-card-url">quickflipmedia.com/</div>
+        <div class="page-card-desc">Full homepage with nav, hero, services, gallery and principles, quick tips, about, workshops CTA, testimonials, and footer.</div>
+        <span class="page-card-cta">View mockup →</span>
+      </div>
+    </a>
+
+    <a href="about.html" class="page-card">
+      <div class="page-card-preview preview-about" style="font-size:22px;font-family:'Nunito',sans-serif;font-weight:800;color:rgba(255,255,255,0.4);letter-spacing:-0.02em;">About</div>
+      <div class="page-card-body">
+        <span class="badge badge-ready">Design complete</span>
+        <div class="page-card-tag">Company page</div>
+        <div class="page-card-name">About</div>
+        <div class="page-card-url">quickflipmedia.com/about</div>
+        <div class="page-card-desc">Full about page with origin story, founder profiles, full team grid, mission section, and CTA. Includes team page placeholder grid.</div>
+        <span class="page-card-cta">View mockup →</span>
+      </div>
+    </a>
+
+    <a href="hello.html" class="page-card">
+      <div class="page-card-preview preview-hello" style="font-family:'Nunito Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;">/hello</div>
+      <div class="page-card-body">
+        <span class="badge badge-ready">Design complete</span>
+        <div class="page-card-tag">Podcast landing</div>
+        <div class="page-card-name">Hello page</div>
+        <div class="page-card-url">quickflipmedia.com/hello</div>
+        <div class="page-card-desc">Podcast listener landing page. Quiz preview, three result types, sizzle reel, about section, and lead magnet email capture.</div>
+        <span class="page-card-cta">View mockup →</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<section class="coming-soon">
+  <div class="coming-inner">
+    <div class="pages-label" style="color:var(--mid)"><span style="display:inline-block;width:22px;height:1px;background:var(--mid)"></span> Up next</div>
+    <h2 class="pages-title" style="margin-bottom:0">Pages still to build</h2>
+    <div class="coming-grid">
+
+      <div class="coming-card">
+        <span class="badge badge-progress">In progress</span>
+        <div class="coming-name">Quiz</div>
+        <div class="coming-url">quickflipmedia.com/start</div>
+        <div class="coming-desc">Seven-question content diagnostic. Three result types: The Storyteller, The Builder, The Advocate. Email gate before results.</div>
+      </div>
+
+      <div class="coming-card">
+        <span class="badge badge-planned">Planned</span>
+        <div class="coming-name">Services + Pricing</div>
+        <div class="coming-url">quickflipmedia.com/services</div>
+        <div class="coming-desc">One page covering Video, Photo, and Web services. YouTube sample embeds, pricing tiers, and quote CTAs.</div>
+      </div>
+
+      <div class="coming-card">
+        <span class="badge badge-planned">Planned</span>
+        <div class="coming-name">Workshops + AMA</div>
+        <div class="coming-url">quickflipmedia.com/workshops</div>
+        <div class="coming-desc">Upcoming workshop schedule, registration, and the permanent monthly AMA Google Meet link.</div>
+      </div>
+
+      <div class="coming-card">
+        <span class="badge badge-planned">Planned</span>
+        <div class="coming-name">Quick Tips</div>
+        <div class="coming-url">quickflipmedia.com/tips</div>
+        <div class="coming-desc">Article archive page plus individual article template. YouTube embed at top, written summary, related service CTA.</div>
+      </div>
+
+      <div class="coming-card">
+        <span class="badge badge-planned">Planned</span>
+        <div class="coming-name">Contact</div>
+        <div class="coming-url">quickflipmedia.com/contact</div>
+        <div class="coming-desc">Simple contact form. Name, email, what you need. Links to services for browsers not ready to reach out.</div>
+      </div>
+
+      <div class="coming-card">
+        <span class="badge badge-planned">Planned</span>
+        <div class="coming-name">Work / Portfolio</div>
+        <div class="coming-url">quickflipmedia.com/work</div>
+        <div class="coming-desc">Case studies and samples. Waiting on April workshop photography and video testimonials before building.</div>
+      </div>
+
+      <div class="coming-card">
+        <span class="badge badge-planned">Planned</span>
+        <div class="coming-name">Newsletter</div>
+        <div class="coming-url">quickflipmedia.com/subscribe</div>
+        <div class="coming-desc">Standalone email signup page. Lead magnet offer front and center. Connects to Wix Automations welcome sequence.</div>
+      </div>
+
+      <div class="coming-card">
+        <span class="badge badge-planned">Planned</span>
+        <div class="coming-name">Past AMAs</div>
+        <div class="coming-url">quickflipmedia.com/ama</div>
+        <div class="coming-desc">Archive of past AMA recordings. YouTube embedded. Builds itself over time. Links to permanent AMA page.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">
+    <div class="footer-logo-mark">QF</div>
+    <span class="footer-logo-text">Quick<span>Flip</span> Media</span>
+  </div>
+  <span class="footer-meta">Design mockups — not the live site — March 2026</span>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuickFlip Media — Welcome</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarina&family=Cormorant+Garamond:ital,wght@1,300&family=Nunito:wght@300;400;500;600;700;800&family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #222e50;
+    --paper: #fffff0;
+    --paper-mid: #f5f5e0;
+    --paper-dark: #e8e8cc;
+    --mid: #4a5568;
+    --light: #8896a8;
+    --gold: #eeba2b;
+    --coral: #ff6f59;
+    --sky: #57c2ef;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-pill: 100px;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 56px;
+    height: 64px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-mark {
+    width: 38px; height: 38px; background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Sarina', serif; font-size: 16px; color: var(--ink);
+    border-radius: var(--radius-sm);
+  }
+  .nav-logo-text { font-family: 'Sarina', serif; font-size: 20px; color: var(--paper); }
+  .nav-logo-text span { color: var(--gold); }
+  .nav-site-link {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    text-decoration: none;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .nav-site-link:hover { color: rgba(255,255,255,0.7); }
+  .nav-site-link::after { content: '→'; }
+
+  /* HERO */
+  .hero {
+    background: var(--ink);
+    padding: 80px 56px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -60px;
+    width: 480px; height: 480px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(87,194,239,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px;
+    align-items: center;
+  }
+  .hero-left {}
+  .hero-eyebrow {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.1s forwards;
+  }
+  .hero-eyebrow::before { content: ''; display: inline-block; width: 26px; height: 1px; background: var(--gold); }
+  .hero-headline {
+    font-family: 'Sarina', serif;
+    font-size: clamp(36px, 3.8vw, 56px);
+    color: var(--paper);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.25s forwards;
+  }
+  .hero-body {
+    font-size: 16px;
+    color: rgba(255,255,255,0.48);
+    line-height: 1.85;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.4s forwards;
+  }
+  .hero-body strong { color: rgba(255,255,255,0.75); font-weight: 500; }
+  .hero-quiz-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--coral);
+    color: white;
+    padding: 16px 32px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: var(--radius-pill);
+    transition: background 0.2s, transform 0.15s;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.5s forwards;
+  }
+  .hero-quiz-btn:hover { background: #e55a45; transform: translateY(-1px); }
+  .hero-quiz-btn .btn-arrow { transition: transform 0.2s; }
+  .hero-quiz-btn:hover .btn-arrow { transform: translateX(4px); }
+
+  /* Quiz preview card */
+  .quiz-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    padding: 28px;
+    border-radius: var(--radius-lg);
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.35s forwards;
+  }
+  .qc-tag {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .qc-tag::before { content: ''; width: 16px; height: 1px; background: var(--coral); display: inline-block; }
+  .qc-question {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.78);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .qc-opts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .qc-opt {
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 10px 14px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.38);
+    line-height: 1.45;
+    transition: all 0.2s;
+    border-radius: var(--radius-sm);
+  }
+  .qc-opt.lit {
+    border-color: rgba(255,111,89,0.4);
+    color: rgba(255,255,255,0.72);
+    background: rgba(255,111,89,0.05);
+  }
+  .qc-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .qc-dots { display: flex; gap: 5px; }
+  .qc-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.12); }
+  .qc-dot.on { background: var(--coral); }
+  .qc-meta {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.22);
+  }
+
+  /* SIZZLE REEL */
+  .sizzle {
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 0 56px 64px;
+  }
+  .sizzle-inner { max-width: 1000px; margin: 0 auto; }
+  .sizzle-video {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #1a2744;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+  }
+  .sizzle-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .sizzle-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(160deg, #1e2d4a 0%, #162240 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    color: rgba(255,255,255,0.15);
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .play-ring {
+    width: 64px; height: 64px;
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .play-triangle {
+    width: 0; height: 0;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    border-left: 18px solid rgba(255,255,255,0.25);
+    margin-left: 4px;
+  }
+  .sizzle-caption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0 0;
+  }
+  .sizzle-caption-text {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.22);
+  }
+  .sizzle-caption-link {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s, gap 0.2s;
+  }
+  .sizzle-caption-link:hover { color: rgba(255,255,255,0.7); gap: 10px; }
+
+  /* RESULTS */
+  .results {
+    padding: 72px 56px;
+    border-bottom: 1px solid var(--paper-dark);
+  }
+  .results-inner { max-width: 1000px; margin: 0 auto; }
+  .section-label {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::before { content: ''; display: inline-block; width: 22px; height: 1px; background: var(--coral); }
+  .section-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(28px, 2.8vw, 42px);
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+  }
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .result-card {
+    background: var(--paper);
+    padding: 32px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s, transform 0.2s;
+    border: 1px solid var(--paper-dark);
+    border-radius: var(--radius-lg);
+  }
+  .result-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .result-card:hover { background: var(--paper-mid); transform: translateY(-3px); }
+  .result-card:hover::before { transform: scaleX(1); }
+  .result-card.storyteller::before { background: var(--ink); }
+  .result-card.builder::before { background: #BA7517; }
+  .result-card.advocate::before { background: #1D9E75; }
+  .result-pill {
+    display: inline-block;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 3px 12px;
+    border-radius: var(--radius-pill);
+    margin-bottom: 14px;
+  }
+  .result-name {
+    font-family: 'Sarina', serif;
+    font-size: 24px;
+    color: var(--ink);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .result-descriptor {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 17px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--light);
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+  .result-desc {
+    font-size: 14px;
+    color: var(--mid);
+    line-height: 1.7;
+  }
+
+  /* ABOUT */
+  .about {
+    background: var(--paper-mid);
+    border-bottom: 1px solid var(--paper-dark);
+    padding: 72px 56px;
+  }
+  .about-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 0;
+    align-items: start;
+  }
+  .about-div { background: var(--paper-dark); }
+  .about-left { padding-right: 60px; }
+  .about-right { padding-left: 60px; }
+  .about-headline {
+    font-family: 'Sarina', serif;
+    font-size: clamp(28px, 2.8vw, 40px);
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 16px;
+    margin-top: 12px;
+  }
+  .about-body { font-size: 15px; color: var(--mid); line-height: 1.85; }
+  .about-body p { margin-bottom: 14px; }
+  .about-body p:last-child { margin-bottom: 0; }
+  .founder-card {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 16px;
+    background: var(--paper);
+    margin-bottom: 10px;
+    transition: background 0.2s;
+    border-radius: var(--radius-md);
+  }
+  .founder-card:last-of-type { margin-bottom: 0; }
+  .founder-card:hover { background: var(--paper-dark); }
+  .f-avatar {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: var(--paper-dark);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .f-name {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+  .f-role { font-size: 12px; color: var(--mid); line-height: 1.4; }
+  .studio-note {
+    margin-top: 24px;
+    padding: 16px 18px;
+    background: var(--paper);
+    border-left: 3px solid var(--coral);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  .studio-note p {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.65;
+  }
+  .studio-note a { color: var(--coral); text-decoration: none; font-weight: 600; }
+  .studio-note a:hover { text-decoration: underline; }
+  .about-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    border-bottom: 2px solid var(--coral);
+    padding-bottom: 3px;
+    transition: gap 0.2s, color 0.2s;
+  }
+  .about-link:hover { gap: 12px; color: var(--coral); }
+
+  /* LEAD MAGNET */
+  .lead {
+    background: var(--ink);
+    padding: 72px 56px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .lead-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px;
+    align-items: center;
+  }
+  .lead-label {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .lead-label::before { content: ''; display: inline-block; width: 22px; height: 1px; background: var(--gold); }
+  .lead-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(22px, 2.5vw, 34px);
+    font-weight: 800;
+    color: var(--paper);
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+  .lead-body {
+    font-size: 15px;
+    color: rgba(255,255,255,0.42);
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
+  .lead-form-label {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .lead-form-row { display: flex; gap: 0; }
+  .lead-input {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-right: none;
+    color: var(--paper);
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    padding: 13px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    border-radius: var(--radius-pill) 0 0 var(--radius-pill);
+  }
+  .lead-input::placeholder { color: rgba(255,255,255,0.18); }
+  .lead-input:focus { border-color: rgba(255,255,255,0.28); }
+  .lead-btn {
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    padding: 13px 24px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+    border-radius: 0 var(--radius-pill) var(--radius-pill) 0;
+  }
+  .lead-btn:hover { background: #d4a520; }
+  .lead-privacy {
+    font-size: 12px;
+    color: rgba(255,255,255,0.18);
+    margin-top: 10px;
+  }
+  .lead-asset {
+    border: 2px dashed rgba(255,255,255,0.1);
+    aspect-ratio: 4/3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
+    padding: 32px;
+    border-radius: var(--radius-lg);
+  }
+  .asset-icon {
+    width: 52px; height: 64px;
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .asset-icon::after {
+    content: '';
+    position: absolute;
+    top: -1px; right: -1px;
+    width: 14px; height: 14px;
+    background: rgba(255,255,255,0.12);
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  }
+  .asset-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 24px;
+  }
+  .asset-line {
+    height: 2px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 1px;
+  }
+  .asset-line:last-child { width: 70%; }
+  .asset-title {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.22);
+  }
+  .asset-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.12);
+    font-style: italic;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    padding: 28px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 3px solid var(--gold);
+  }
+  .f-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .f-logo-mark {
+    width: 28px; height: 28px; background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Sarina', serif; font-size: 12px; color: var(--ink);
+    border-radius: 6px;
+  }
+  .f-logo-text { font-family: 'Sarina', serif; font-size: 16px; color: var(--paper); }
+  .f-logo-text span { color: var(--gold); }
+  .f-links { display: flex; gap: 24px; }
+  .f-links a {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(255,255,255,0.28);
+    transition: color 0.2s;
+  }
+  .f-links a:hover { color: var(--paper); }
+  .f-copy {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.15);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .fade-up.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-mark">QF</div>
+    <span class="nav-logo-text">Quick<span>Flip</span> Media</span>
+  </a>
+  <a href="/" class="nav-site-link">Visit the full site</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Welcome</div>
+      <h1 class="hero-headline">Good to have you here.</h1>
+      <p class="hero-body">
+        We are a video, photo, and web production company built on newsroom principles.
+        <strong>If you are not sure where to start, the quiz takes three minutes and points you in the right direction.</strong>
+      </p>
+      <a href="/start" class="hero-quiz-btn">
+        Find out where you land <span class="btn-arrow">→</span>
+      </a>
+    </div>
+    <div class="quiz-card">
+      <div class="qc-tag">A sample question</div>
+      <div class="qc-question">When you think about your business and content right now, what feels most true?</div>
+      <div class="qc-opts">
+        <div class="qc-opt lit">I know we have a good story. I just never seem to find the time to tell it.</div>
+        <div class="qc-opt">I am trying to figure out the basics. I do not have a content system yet.</div>
+        <div class="qc-opt">We produce content, but it is not connecting the way it should.</div>
+      </div>
+      <div class="qc-footer">
+        <div class="qc-dots">
+          <div class="qc-dot on"></div>
+          <div class="qc-dot"></div>
+          <div class="qc-dot"></div>
+          <div class="qc-dot"></div>
+          <div class="qc-dot"></div>
+          <div class="qc-dot"></div>
+          <div class="qc-dot"></div>
+        </div>
+        <span class="qc-meta">7 questions total</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results">
+  <div class="results-inner">
+    <div class="fade-up">
+      <div class="section-label">The quiz results</div>
+      <h2 class="section-title">Three types. One is yours.</h2>
+    </div>
+    <div class="results-grid">
+
+      <div class="result-card storyteller fade-up">
+        <div class="result-pill" style="background:#e8eaf0;color:#1a2340">The Storyteller</div>
+        <div class="result-name">The Storyteller</div>
+        <div class="result-descriptor">You have built something real.</div>
+        <div class="result-desc">The story exists. What you need is a partner who can capture it properly and turn it into content that works without you having to do it yourself.</div>
+      </div>
+
+      <div class="result-card builder fade-up" style="transition-delay:.08s">
+        <div class="result-pill" style="background:#FAEEDA;color:#633806">The Builder</div>
+        <div class="result-name">The Builder</div>
+        <div class="result-descriptor">You are figuring it out.</div>
+        <div class="result-desc">The drive is there. What you need is a practical system you can actually use without it becoming a second job.</div>
+      </div>
+
+      <div class="result-card advocate fade-up" style="transition-delay:.16s">
+        <div class="result-pill" style="background:#E1F5EE;color:#085041">The Advocate</div>
+        <div class="result-name">The Advocate</div>
+        <div class="result-descriptor">Your work deserves to be heard.</div>
+        <div class="result-desc">Your work matters and people should know about it. The gap is between the quality of what you do and how it shows up online. That gap is fixable.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SIZZLE REEL -->
+<section class="sizzle">
+  <div class="sizzle-inner">
+    <div class="sizzle-video">
+      <!-- Replace with your actual video embed or Wix Video widget -->
+      <!-- <video src="YOUR_VIDEO_URL" autoplay muted loop playsinline></video> -->
+      <div class="sizzle-placeholder">
+        <div class="play-ring">
+          <div class="play-triangle"></div>
+        </div>
+        <span>Sizzle reel — replace with your video embed</span>
+      </div>
+    </div>
+    <div class="sizzle-caption">
+      <span class="sizzle-caption-text">QuickFlip Media — Real moments. Usable content.</span>
+      <a href="/services" class="sizzle-caption-link">See our work</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about-inner">
+    <div class="about-left fade-up">
+      <div class="section-label">Who we are</div>
+      <h2 class="about-headline">We came up in newsrooms.</h2>
+      <div class="about-body">
+        <p>QuickFlip Media was started by Samantha Morgan and Matthew White, two television veterans who built their careers inside fast-moving newsrooms in Baton Rouge.</p>
+        <p>We bring that same discipline to businesses, nonprofits, and organizations that want to show up online consistently without building a full production studio to do it.</p>
+      </div>
+      <a href="/about" class="about-link">Our full story →</a>
+    </div>
+    <div class="about-div"></div>
+    <div class="about-right fade-up" style="transition-delay:.12s">
+      <div class="section-label">The founders</div>
+      <div style="margin-top:12px">
+        <div class="founder-card">
+          <div class="f-avatar">👤</div>
+          <div>
+            <div class="f-name">Samantha Morgan</div>
+            <div class="f-role">Co-Founder · Reporter, editor, and digital content manager at WVLA and WAFB</div>
+          </div>
+        </div>
+        <div class="founder-card">
+          <div class="f-avatar">👤</div>
+          <div>
+            <div class="f-name">Matthew White</div>
+            <div class="f-role">Co-Founder · Videographer at WBRZ</div>
+          </div>
+        </div>
+        <div class="studio-note">
+          <p>Our physical studio space in Baton Rouge is now open. In-person workshops start in April. <a href="/workshops">See the schedule →</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEAD MAGNET -->
+<section class="lead">
+  <div class="lead-inner">
+    <div class="fade-up">
+      <div class="lead-label">Free resource</div>
+      <h2 class="lead-title">Something useful to take with you.</h2>
+      <p class="lead-body">We will send it straight to your inbox. Practical, no fluff, and something you can use right away.</p>
+      <span class="lead-form-label">Get the free guide</span>
+      <div class="lead-form-row">
+        <input class="lead-input" type="email" placeholder="Your email address" />
+        <button class="lead-btn">Send it</button>
+      </div>
+      <p class="lead-privacy">No spam. Unsubscribe any time.</p>
+    </div>
+    <div class="fade-up" style="transition-delay:.12s">
+      <div class="lead-asset">
+        <div class="asset-icon">
+          <div class="asset-lines">
+            <div class="asset-line"></div>
+            <div class="asset-line"></div>
+            <div class="asset-line"></div>
+          </div>
+        </div>
+        <div class="asset-title">Lead magnet goes here</div>
+        <div class="asset-sub">PDF cover or short video preview</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="/" class="f-logo">
+    <div class="f-logo-mark">QF</div>
+    <span class="f-logo-text">Quick<span>Flip</span> Media</span>
+  </a>
+  <div class="f-links">
+    <a href="/services">Services</a>
+    <a href="/workshops">Workshops</a>
+    <a href="/tips">Quick Tips</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+  </div>
+  <span class="f-copy">© 2026 QuickFlip Media</span>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
